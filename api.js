@@ -2,9 +2,8 @@
 const axios = require('axios')
 require('dotenv').config();
 const minimist = require('minimist');
-const apikey = process.env.APIKEY;
 const inquirer = require('inquirer');
-
+const fs = require('fs');
 const args = require('minimist')(process.argv.slice(2));
 
 if(args.c == undefined){
@@ -13,11 +12,52 @@ if(args.c == undefined){
 
 var location_data;
 var KEY ;
+var apikey;
+async function start(){
+	var path = __dirname + '/apikey.txt';
+fs.readFile(path, async (error, data)=>{
+	if (error){
+		const apiKey = await apiKeyquestion();
+		apikey = apiKey.apikey;
+		fs.writeFile(__dirname + '/apikey.txt', apikey, function(err) {
+        	if (err) throw (err) //the throw is used to crash the scrpt when there is an 
+            //error in openning the program the file iis not being open just like in dfh
+    	    console.log("Apikey is created");
+	    });
+    	key();
+	}
+	else{
+		apikey = data;
+		key();
+	}
+
+	});
+}
+
+start();
+
+function apiKeyquestion (){
+	const questions = [
+	{
+		name: 'apikey',
+        type: 'input',
+        message: 'Please enter your api key:',
+        validate: function( value ) {
+		if (value.length) {
+    	    return true;
+			} else {
+            return 'Please enter a apikey';
+          }
+        }
+      }
+    ];
+    return inquirer.prompt(questions);
+}
 
 async function key() {
 
 	location_data = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/search?apikey='+apikey+"&q="+ args.c);
-	 
+	
 	var len = Object.keys(location_data.data).length;
 	
 	var country = new Array();
@@ -101,5 +141,3 @@ function printResult(headline, severity, unit, dayPhrase, nightPhrase, min, max)
 
 }
 
-
-key();
