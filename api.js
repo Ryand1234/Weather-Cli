@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 const axios = require('axios')
 require('dotenv').config();
+const chalk = require('chalk');
 const minimist = require('minimist');
 const inquirer = require('inquirer');
 const fs = require('fs');
+const figlet = require('figlet')
 const args = require('minimist')(process.argv.slice(2));
 
 if(args.c == undefined){
@@ -120,24 +122,24 @@ async function weatherData() {
 }
 
 function printUsage() {
-	console.log("Error parameter not specified");
+	console.log(chalk.red("Error parameter not specified"));
 	console.log("Usage: ");
 	console.log("	-c: City Name");
 	process.exit(1);
 }
 
 function printResult(headline, severity, unit, dayPhrase, nightPhrase, min, max){
-	
-	console.log("--------------------Weather Updates--------------")
+	console.log(chalk.green(figlet.textSync('Weather', { horizontalLayout: 'full'})))
+	console.log(chalk.red("--------------------Weather Updates--------------"));
 	console.log("");
-	console.log("		Headline: "+headline);
-	console.log("		Severity: "+severity);
-	console.log("		Minimum Temperature: "+min+' '+unit);
-	console.log("		Maximum Temperature: "+max+' '+unit);
-	console.log("		Day Phrase: "+dayPhrase);
-	console.log("		Night Phrase: "+nightPhrase);
+	console.log(chalk.yellow("		Headline: "+headline));
+	console.log(chalk.cyan("		Severity: "+severity));
+	console.log(chalk.yellow("		Minimum Temperature: "+min+' '+unit));
+	console.log(chalk.cyan("		Maximum Temperature: "+max+' '+unit));
+	console.log(chalk.yellow("		Day Phrase: "+dayPhrase));
+	console.log(chalk.cyan("		Night Phrase: "+nightPhrase));
 	console.log("");
-	console.log("--------------------Report Ends--------------");
+	console.log(chalk.red("--------------------Report Ends--------------"));
 
 }
 
