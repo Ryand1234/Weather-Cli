@@ -22,8 +22,7 @@ fs.readFile(path, async (error, data)=>{
 		const apiKey = await apiKeyquestion();
 		apikey = apiKey.apikey;
 		fs.writeFile(__dirname + '/apikey.txt', apikey, function(err) {
-        	if (err) throw (err) //the throw is used to crash the scrpt when there is an 
-            //error in openning the program the file iis not being open just like in dfh
+        	if (err) throw (err) 
     	    console.log("Apikey is created");
 	    });
     	key();
