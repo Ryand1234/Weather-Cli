@@ -117,7 +117,10 @@ async function weatherData() {
 	var min = weather.Minimum.Value;
 	var max = weather.Maximum.Value;
 	
-	printResult(headline, severity, unit, dayPhrase, nightPhrase, min, max);
+	min_C = ((min-32)*5/9).toFixed(2);
+	max_C = ((max-32)*5/9).toFixed(2);
+
+	printResult(headline, severity, unit, dayPhrase, nightPhrase, min_C, max_C);
 }
 
 function printUsage() {
@@ -133,8 +136,8 @@ function printResult(headline, severity, unit, dayPhrase, nightPhrase, min, max)
 	console.log("");
 	console.log(chalk.yellow("		Headline: "+headline));
 	console.log(chalk.cyan("		Severity: "+severity));
-	console.log(chalk.yellow("		Minimum Temperature: "+min+' '+unit));
-	console.log(chalk.cyan("		Maximum Temperature: "+max+' '+unit));
+	console.log(chalk.yellow("		Minimum Temperature: "+min+' C'));
+	console.log(chalk.cyan("		Maximum Temperature: "+max+' C'));
 	console.log(chalk.yellow("		Day Phrase: "+dayPhrase));
 	console.log(chalk.cyan("		Night Phrase: "+nightPhrase));
 	console.log("");
